@@ -18,6 +18,7 @@ import Layout from '../layouts/Layout.astro';
     let token = urlParams.get('token');
 	let siteId = urlParams.get("siteId");
 	const wfThingKey = `wf_thing_${siteId}`;
+	console.log("WF thing", wfThingKey);
     if (token && !localStorage.getItem(wfThingKey)) {
         localStorage.setItem(wfThingKey, token);
     }
