@@ -26,7 +26,7 @@ import Layout from '../layouts/Layout.astro';
 	console.log("TOKEN 2", token ? "has token" : "no token");
 
 	const hostname = window.location.hostname;
-    const apiUrl = `http://localhost:4321/api/sites`;
+    const apiUrl = `https://${hostname}/api/sites`;
 
 	fetch(apiUrl, {
 		method: "GET",
