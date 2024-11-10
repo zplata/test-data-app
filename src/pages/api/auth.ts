@@ -15,12 +15,14 @@ import { WebflowClient } from "webflow-api";
  *
  * @param { url } - URL of our Data Client
  */
-export const GET: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async ({ url, locals }) => {
+  //@ts-ignore
+  const runtime = locals?.runtime;
   const { searchParams } = url;
   const reqUrl = new URL(url);
   const accessToken = await WebflowClient.getAccessToken({
-    clientId: import.meta.env.WEBFLOW_CLIENT_ID || process.env.WEBFLOW_CLIENT_ID || "",
-    clientSecret: import.meta.env.WEBFLOW_CLIENT_SECRET || process.env.WEBFLOW_CLIENT_SECRET || "",
+    clientId: import.meta.env.WEBFLOW_CLIENT_ID || runtime?.env?.WEBFLOW_CLIENT_ID || "",
+    clientSecret: import.meta.env.WEBFLOW_CLIENT_SECRET || runtime?.env?.WEBFLOW_CLIENT_SECRET || "",
     code: searchParams.get("code") || "",
   });
   // await storeToken("user", accessToken);
