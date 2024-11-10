@@ -1,11 +1,13 @@
 import type { APIRoute } from "astro";
-import getWebflowSdk from "../utils/getWebflowSdk";
+// import getWebflowSdk from "../utils/getWebflowSdk";
+import {WebflowClient} from "webflow-api";
 
-export const GET: APIRoute = async () => {
-  const wf = await getWebflowSdk();
-  if (!wf) {
-    return Response.error();
+export const GET: APIRoute = async ({request}) => {
+  const token = request.headers.get('X-WF-Thing')?.replace('Bearer ', '');
+  if (!token) {
+    return new Response('Unauthorized', { status: 401 });
   }
+  const wf = new WebflowClient({ accessToken: token });
   const sites = await wf.sites.list();
   if (sites && sites.sites?.length) {
     return new Response(

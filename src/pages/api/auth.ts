@@ -24,6 +24,6 @@ export const GET: APIRoute = async ({ url }) => {
     clientSecret: import.meta.env.WEBFLOW_CLIENT_SECRET || "",
     code: searchParams.get("code") || "",
   });
-  await storeToken("user", accessToken);
-  return Response.redirect(`${reqUrl.origin}/success`);
+  // await storeToken("user", accessToken);
+  return Response.redirect(`${reqUrl.origin}/success?token=${accessToken}`);
 };

@@ -1,39 +1,52 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
 
-const textgearApiKey = await import.meta.env.TEXTGEARS_API_KEY;
-
-const groqApiKey = await import.meta.env.GROQ_API_KEY;
 ---
 
 <Layout title="WF Page Example App">
 	<main>
 		<h1>Your Webflow Site is successfully <span class="text-gradient">Authorized</span></h1>
-		<p class="instructions">
-			Find a few sample workflows below as guides for how to read/update Webflow site content. Check out the code to see how the JS SDK is used to call the Webflow Data APIs.
+		<p id="site-data" class="instructions">
+			Site data
+
 		</p>
-        <ul role="list" class="link-card-grid">
-			{!(textgearApiKey || groqApiKey) && (
-				<p>Need Textgear and/or Groq API key setup! Check the README.md of the project for more details</p>
-			)}
-			{textgearApiKey ? (
-				<Card
-					href={`${Astro.url.origin}/features/readability-score`}
-					title="Readability Check"
-					body="Use Textgear to check a page's Flesch-Kincaid readability score"
-				/>
-			) : null}
-			{groqApiKey ? (
-				<Card
-					href="/features/summarized-content"
-					title="Page Summarized Content"
-					body="Use Groq to summarize your page content"
-				/>
-			) : null}
-		</ul>
 	</main>
 </Layout>
+
+<script type="module">
+	const urlParams = new URLSearchParams(window.location.search);
+    let token = urlParams.get('token');
+    if (token && !localStorage.getItem('wf_thing')) {
+        localStorage.setItem('wf_thing', token);
+    }
+	console.log("TOKEN 1", token ? "has token" : "no token");
+	if (!token) {
+		token = localStorage.getItem('wf_thing');
+	}
+	console.log("TOKEN 2", token ? "has token" : "no token");
+
+	const hostname = window.location.hostname;
+    const apiUrl = `http://localhost:4321/api/sites`;
+
+	fetch(apiUrl, {
+		method: "GET",
+		headers: {
+			"X-WF-Thing": `Bearer ${token}`,
+			"Content-Type": "application/json"
+		},
+	})
+	.then((response) => response.json())
+	.then((data) => {
+		const siteData = document.getElementById('site-data');
+		siteData.innerHTML = `
+			Your Webflow site is successfully authorized. You have ${data.sites.length} sites.
+	${JSON.stringify(data.sites)}
+		`;
+	})
+		.catch((error) => {
+			console.error(error);
+		});
+</script>
 
 <style>
 	main {

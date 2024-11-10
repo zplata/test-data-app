@@ -1,4 +1,3 @@
-import { defineIntegration } from "astro";
 import ngrok from "@ngrok/ngrok";
 import dotenv from "dotenv";
 
