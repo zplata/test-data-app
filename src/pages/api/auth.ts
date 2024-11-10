@@ -25,6 +25,9 @@ export const GET: APIRoute = async ({ url, locals }) => {
     clientSecret: import.meta.env.WEBFLOW_CLIENT_SECRET || runtime?.env?.WEBFLOW_CLIENT_SECRET || "",
     code: searchParams.get("code") || "",
   });
+  const wfClient = new WebflowClient({ accessToken });
+  const sites = await wfClient.sites.list();
+  const firstSite = sites.sites?.[0];
   // await storeToken("user", accessToken);
-  return Response.redirect(`${reqUrl.origin}/success?token=${accessToken}`);
+  return Response.redirect(`${reqUrl.origin}/success?token=${accessToken}?siteId=${firstSite.id}`);
 };

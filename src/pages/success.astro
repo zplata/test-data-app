@@ -16,14 +16,16 @@ import Layout from '../layouts/Layout.astro';
 <script>
 	const urlParams = new URLSearchParams(window.location.search);
     let token = urlParams.get('token');
-    if (token && !localStorage.getItem('wf_thing')) {
-        localStorage.setItem('wf_thing', token);
+	let siteId = urlParams.get("siteId");
+	const wfThingKey = `wf_thing_${siteId}`;
+    if (token && !localStorage.getItem(wfThingKey)) {
+        localStorage.setItem(wfThingKey, token);
     }
-	console.log("TOKEN 1", token ? "has token" : "no token");
+	console.log("TOKEN 1 (query param)", token ? "has token" : "no token");
 	if (!token) {
-		token = localStorage.getItem('wf_thing');
+		token = localStorage.getItem(wfThingKey);
 	}
-	console.log("TOKEN 2", token ? "has token" : "no token");
+	console.log("TOKEN 2 (local storage)", token ? "has token" : "no token");
 
 	const hostname = window.location.hostname;
     const apiUrl = `https://${hostname}/api/sites`;
