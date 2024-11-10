@@ -1,5 +1,4 @@
 import type { APIRoute } from "astro";
-// import getWebflowSdk from "../utils/getWebflowSdk";
 import {WebflowClient} from "webflow-api";
 
 export const GET: APIRoute = async ({request}) => {

@@ -1,6 +1,5 @@
 import type { APIRoute } from "astro";
 import { WebflowClient } from "webflow-api";
-import { storeToken } from "../utils/tokens";
 
 /**
  * This is the Webflow Redirect URI that should be configured for the Webflow
