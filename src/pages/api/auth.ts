@@ -19,8 +19,8 @@ export const GET: APIRoute = async ({ url }) => {
   const { searchParams } = url;
   const reqUrl = new URL(url);
   const accessToken = await WebflowClient.getAccessToken({
-    clientId: import.meta.env.WEBFLOW_CLIENT_ID || "",
-    clientSecret: import.meta.env.WEBFLOW_CLIENT_SECRET || "",
+    clientId: import.meta.env.WEBFLOW_CLIENT_ID || process.env.WEBFLOW_CLIENT_ID || "",
+    clientSecret: import.meta.env.WEBFLOW_CLIENT_SECRET || process.env.WEBFLOW_CLIENT_SECRET || "",
     code: searchParams.get("code") || "",
   });
   // await storeToken("user", accessToken);

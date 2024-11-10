@@ -11,7 +11,7 @@ export const GET: APIRoute = async () => {
       "authorized_user:read",
       "sites:read",
     ],
-    clientId: import.meta.env.WEBFLOW_CLIENT_ID || "",
+    clientId: import.meta.env.WEBFLOW_CLIENT_ID || process.env.WEBFLOW_CLIENT_ID || "",
   });
   return Response.redirect(authorizeUrl);
 };
