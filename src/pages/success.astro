@@ -13,7 +13,7 @@ import Layout from '../layouts/Layout.astro';
 	</main>
 </Layout>
 
-<script type="module">
+<script>
 	const urlParams = new URLSearchParams(window.location.search);
     let token = urlParams.get('token');
     if (token && !localStorage.getItem('wf_thing')) {

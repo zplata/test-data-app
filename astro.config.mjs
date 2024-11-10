@@ -10,10 +10,6 @@ export default defineConfig({
   integrations: [
     react(),
     tailwind(),
-    ngrokIntegration({
-      authtoken: "your-ngrok-authtoken",
-      port: 4321,
-    }),
   ],
   output: "server",
   adapter: node({
