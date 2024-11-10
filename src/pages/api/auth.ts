@@ -29,5 +29,5 @@ export const GET: APIRoute = async ({ url, locals }) => {
   const sites = await wfClient.sites.list();
   const firstSite = sites.sites?.[0];
   // await storeToken("user", accessToken);
-  return Response.redirect(`${reqUrl.origin}/success?token=${accessToken}?siteId=${firstSite.id}`);
+  return Response.redirect(`${reqUrl.origin}/success?token=${accessToken}&siteId=${firstSite.id}`);
 };
