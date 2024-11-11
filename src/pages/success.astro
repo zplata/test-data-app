@@ -26,6 +26,12 @@ import Layout from '../layouts/Layout.astro';
 	if (!token) {
 		token = localStorage.getItem(wfThingKey);
 	}
+	if (!token) {
+		const wfKeys = Object.keys(localStorage).filter(key => key.startsWith('wf_thing_'));
+		if (wfKeys.length === 1) {
+			token = localStorage.getItem(wfKeys[0]);
+		}
+	}
 	console.log("TOKEN 2 (local storage)", token ? "has token" : "no token");
 
 	const hostname = window.location.hostname;
